@@ -8,7 +8,7 @@ output:
 
 ## Loading and preprocessing the data
 
-1. download and read data
+# download and read data
 
 download.file(url ="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", dest = paste(getwd(), "/activity.zip", sep = ""))
 
