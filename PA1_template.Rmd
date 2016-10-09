@@ -1,12 +1,17 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
+title: "Reproducible Research Project 1"
+author: "Shawn Dong"
+date: "October 7, 2016"
 output: 
-  html_document:
-    keep_md: true
+  html_document: 
+    keep_md: yes
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
+```
 
-## Loading and preprocessing the data
+Download and read data
 
 ```{r download and read data}
 download.file(url ="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", dest = paste(getwd(), "/activity.zip", sep = ""))
@@ -15,14 +20,15 @@ activity <- read.csv(activity, header = TRUE)
 head(activity)
 ```
 
-
-## What is mean total number of steps taken per day?
+Histogram of total number of steps taken each day
 
 ```{r steps}
 ## massage the data
 Nsteps <- aggregate(activity["steps"], by = list(date = activity$date), FUN = sum, na.rm = TRUE)
 hist(Nsteps$steps, main = "Total steps taken each day", xlab = "Steps", ylab = "Frequency", breaks = 30)
 ```
+
+Mean and median number of steps taken each day
 
 ```{r mean and median}
 ## calculation
@@ -31,7 +37,7 @@ medianstep <- median(Nsteps$steps)
 print(paste("The mean and median number of steps taken each day is respectively", meanstep, "and", medianstep))
 ```
 
-## What is the average daily activity pattern?
+Time series plot of the average number of steps taken
 
 ```{r mean}
 ## frame the data
@@ -40,6 +46,8 @@ Asteps <- aggregate(activity["steps"], by = list(interval = activity$interval), 
 plot(Asteps$interval, Asteps$steps, type = "l", xlab = "interval", ylab = "steps", main = "Time Series Plot of The Average Number of Steps Taken")
 ```
 
+The 5-minute interval that, on average, contains the maximum number of steps
+
 ```{r max number of steps in which 5-minutes interval}
 ## figure out the order of the maximum number of steps
 indicator <- which.max(Asteps$steps)
@@ -47,7 +55,8 @@ indicator <- which.max(Asteps$steps)
 print(paste("The 5-minute interval that, on average, contains the maximum number of steps is:", Asteps$interval[indicator]))
 ```
 
-## Imputing missing values
+Code to describe and show a strategy for imputing missing data
+Histogram of the total number of steps taken each day after missing values are imputed
 
 ```{r strategy for imputing missing data}
 ## The strategy is just to set na.rm = TRUE
@@ -55,8 +64,7 @@ totalSteps <- aggregate(activity["steps"], by = list(dates = activity$date), FUN
 hist(totalSteps$steps, breaks = 30, main = "Total Number of Steps taken each day", xlab = "Steps", ylab = "Frequency")
 ```
 
-
-## Are there differences in activity patterns between weekdays and weekends?
+Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 
 ```{r panel plot}
 ## tranform the date to weekdays
