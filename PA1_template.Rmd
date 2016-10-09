@@ -8,7 +8,7 @@ output:
 
 ## Loading and preprocessing the data
 
-1. download and read data
+I. download and read data
 
 download.file(url ="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", dest = paste(getwd(), "/activity.zip", sep = ""))
 
@@ -20,17 +20,17 @@ head(activity)
 
 ## What is mean total number of steps taken per day?
 
-1. Histogram of total number of steps taken each day
+II. Histogram of total number of steps taken each day
 
-2. massage the data
+III. massage the data
 
 Nsteps <- aggregate(activity["steps"], by = list(date = activity$date), FUN = sum, na.rm = TRUE)
 
 hist(Nsteps$steps, main = "Total steps taken each day", xlab = "Steps", ylab = "Frequency", breaks = 30)
 
-3. Mean and median number of steps taken each day
+IV. Mean and median number of steps taken each day
 
-4. calculation
+V. calculation
 
 meanstep <- mean(Nsteps$steps)
 medianstep <- median(Nsteps$steps)
@@ -43,25 +43,25 @@ plot(Asteps$interval, Asteps$steps, type = "l", xlab = "interval", ylab = "steps
 
 ## What is the average daily activity pattern?
 
-1. frame the data
+VI. frame the data
 
 Asteps <- aggregate(activity["steps"], by = list(interval = activity$interval), FUN = mean, na.rm = TRUE)
 
-2. make the plot
+VII. make the plot
 
 plot(Asteps$interval, Asteps$steps, type = "l", xlab = "interval", ylab = "steps", main = "Time Series Plot of The Average Number of Steps Taken")
 
-3. figure out the order of the maximum number of steps
+VIII. figure out the order of the maximum number of steps
 
 indicator <- which.max(Asteps$steps)
 
-4. find out the exact interval
+IX. find out the exact interval
 
 print(paste("The 5-minute interval that, on average, contains the maximum number of steps is:", Asteps$interval[indicator]))
 
 ## Imputing missing values
 
-1. The strategy is just to set na.rm = TRUE
+X. The strategy is just to set na.rm = TRUE
 
 totalSteps <- aggregate(activity["steps"], by = list(dates = activity$date), FUN = sum, na.rm = TRUE)
 
@@ -69,29 +69,29 @@ hist(totalSteps$steps, breaks = 30, main = "Total Number of Steps taken each day
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-1. tranform the date to weekdays
+1.tranform the date to weekdays
 
 date <- as.Date(as.character(activity$date))
 
 wdate <- weekdays(date)
 
-2. check whether the day is weekday or weekend
+2.check whether the day is weekday or weekend
 
 weekendindicator <- (wdate == "Saturday" | wdate == "Sunday")
 
 weekindicator <- (wdate != "Saturday" & wdate != "Sunday")
 
-3. redefine the data
+3.redefine the data
 
 wdate[weekendindicator] <- "Weekends"
 
 wdate[weekindicator] <- "Weekdays"
 
-4. make the data.frame
+4.make the data.frame
 
 stepdate <- aggregate(activity["steps"], by = list(date = wdate, interval = activity$interval), FUN = mean, na.rm = TRUE)
 
-5. make the plot
+5.make the plot
 
 par(mfrow = c(1, 2))
 
