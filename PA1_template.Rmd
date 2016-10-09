@@ -7,6 +7,8 @@ output:
 
 
 ## Loading and preprocessing the data
+
+# download and read data
 download.file(url ="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", dest = paste(getwd(), "/activity.zip", sep = ""))
 activity <- unzip("activity.zip") 
 activity <- read.csv(activity, header = TRUE)
@@ -14,6 +16,8 @@ head(activity)
 
 
 ## What is mean total number of steps taken per day?
+Histogram of total number of steps taken each day
+
 Nsteps <- aggregate(activity["steps"], by = list(date = activity$date), FUN = sum, na.rm = TRUE)
 hist(Nsteps$steps, main = "Total steps taken each day", xlab = "Steps", ylab = "Frequency", breaks = 30)
 
