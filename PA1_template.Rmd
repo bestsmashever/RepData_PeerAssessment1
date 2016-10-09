@@ -8,7 +8,7 @@ output:
 
 ## Loading and preprocessing the data
 
-# download and read data
+1. download and read data
 
 download.file(url ="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", dest = paste(getwd(), "/activity.zip", sep = ""))
 
@@ -19,7 +19,9 @@ head(activity)
 
 
 ## What is mean total number of steps taken per day?
+
 1. Histogram of total number of steps taken each day
+
 2. massage the data
 
 Nsteps <- aggregate(activity["steps"], by = list(date = activity$date), FUN = sum, na.rm = TRUE)
@@ -27,7 +29,9 @@ Nsteps <- aggregate(activity["steps"], by = list(date = activity$date), FUN = su
 hist(Nsteps$steps, main = "Total steps taken each day", xlab = "Steps", ylab = "Frequency", breaks = 30)
 
 3. Mean and median number of steps taken each day
+
 4. calculation
+
 meanstep <- mean(Nsteps$steps)
 medianstep <- median(Nsteps$steps)
 
@@ -38,6 +42,7 @@ list(interval = activity$interval), FUN = mean, na.rm = TRUE)
 plot(Asteps$interval, Asteps$steps, type = "l", xlab = "interval", ylab = "steps", main = "Time Series Plot of The Average Number of Steps Taken")
 
 ## What is the average daily activity pattern?
+
 1. frame the data
 
 Asteps <- aggregate(activity["steps"], by = list(interval = activity$interval), FUN = mean, na.rm = TRUE)
@@ -47,9 +52,11 @@ Asteps <- aggregate(activity["steps"], by = list(interval = activity$interval), 
 plot(Asteps$interval, Asteps$steps, type = "l", xlab = "interval", ylab = "steps", main = "Time Series Plot of The Average Number of Steps Taken")
 
 3. figure out the order of the maximum number of steps
+
 indicator <- which.max(Asteps$steps)
 
 4. find out the exact interval
+
 print(paste("The 5-minute interval that, on average, contains the maximum number of steps is:", Asteps$interval[indicator]))
 
 ## Imputing missing values
